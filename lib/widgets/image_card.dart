@@ -5,19 +5,23 @@ Widget buildImageCard(PixabayLoadedState state, int index) {
   return Padding(
     padding: const EdgeInsets.all(5),
     child: Container(
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: Colors.blueGrey.shade300,
-          width: 3,
-        ),
-        borderRadius: const BorderRadius.all(
+      decoration: const BoxDecoration(
+        borderRadius: BorderRadius.all(
           Radius.circular(10),
         ),
       ),
       child: Stack(
         children: [
-          Center(
-            child: Image.network(state.images[index].previewURL!),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              image: DecorationImage(
+                image: NetworkImage(
+                  state.images[index].previewURL!,
+                ),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(2.0),
