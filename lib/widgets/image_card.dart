@@ -11,6 +11,7 @@ Widget buildImageCard(PixabayLoadedState state, int index) {
         ),
       ),
       child: Stack(
+        alignment: Alignment.bottomCenter,
         children: [
           Container(
             decoration: BoxDecoration(
@@ -23,54 +24,58 @@ Widget buildImageCard(PixabayLoadedState state, int index) {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: buildImageInfo(state, index),
-          ),
+          buildImageInfo(state, index),
         ],
       ),
     ),
   );
 }
 
-Container buildImageInfo(PixabayLoadedState state, int index) {
-  const textStile = TextStyle(color: Colors.grey, fontSize: 10);
+Widget buildImageInfo(PixabayLoadedState state, int index) {
+  const textStile = TextStyle(color: Colors.white, fontSize: 10);
 
-  return Container(
-    alignment: Alignment.bottomCenter,
-    child: Row(
-      children: [
-        const SizedBox(
-          width: 8,
-        ),
-        const Icon(
-          Icons.thumb_up_alt_sharp,
-          color: Colors.grey,
-          size: 14,
-        ),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          state.images[index].likes.toString(),
-          style: textStile,
-        ),
-        const SizedBox(
-          width: 8,
-        ),
-        const Icon(
-          Icons.remove_red_eye,
-          color: Colors.grey,
-          size: 14,
-        ),
-        const SizedBox(
-          width: 4,
-        ),
-        Text(
-          state.images[index].views.toString(),
-          style: textStile,
-        ),
-      ],
+  return Expanded(
+    child: Container(
+      height: 20,
+      decoration: const BoxDecoration(
+        color: Colors.blueGrey,
+        borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+      ),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 14,
+          ),
+          const Icon(
+            Icons.thumb_up_alt_sharp,
+            color: Colors.white,
+            size: 14,
+          ),
+          const SizedBox(
+            width: 4,
+          ),
+          Text(
+            state.images[index].likes.toString(),
+            style: textStile,
+          ),
+          const SizedBox(
+            width: 8,
+          ),
+          const Icon(
+            Icons.remove_red_eye,
+            color: Colors.white,
+            size: 14,
+          ),
+          const SizedBox(
+            width: 4,
+          ),
+          Text(
+            state.images[index].views.toString(),
+            style: textStile,
+          ),
+        ],
+      ),
     ),
   );
 }

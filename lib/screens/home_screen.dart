@@ -10,56 +10,85 @@ Scaffold buildHomeScreen(
   return Scaffold(
     appBar: AppBar(
       backgroundColor: Colors.blueGrey.shade300,
-      title: Text(title),
-    ),
-    body: Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(10),
-          child: TextField(
-            controller: state.searchController,
-            decoration: const InputDecoration(
-              border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey),
-                borderRadius: BorderRadius.all(Radius.circular(5)),
-              ),
-              hintText: 'Enter search query',
-            ),
-            onChanged: (value) {
-              context.read<PixabayBloc>().add(PixabayChangeUpdateEvent(value));
-            },
+      title: SafeArea(
+        child: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
           ),
+          textAlign: TextAlign.center,
         ),
-        if (state.images.isNotEmpty)
-          Expanded(
-            child: GridView.builder(
-              controller: state.scrollController,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: calculateColumns(context)),
-              itemCount: state.images.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => FullScreenImage(
-                            imageUrl: state.images[index].largeImageURL!),
+      ),
+    ),
+    body: SafeArea(
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                  color: Colors.white,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: TextField(
+                    controller: state.searchController,
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey),
+                        borderRadius: BorderRadius.all(Radius.circular(5)),
                       ),
-                    );
-                  },
-                  child: buildImageCard(state, index),
-                );
-              },
-            ),
-          )
-        else
-          Text('Nothing was found for your request: "${state.changedQuery}"'),
-        if (state.bottomLoader)
-          const CircularProgressIndicator(
-            strokeWidth: 8,
+                      hintText: state.changedQuery,
+                    ),
+                    onChanged: (value) {
+                      context
+                          .read<PixabayBloc>()
+                          .add(PixabayChangeUpdateEvent(value));
+                    },
+                  ),
+                ),
+              ),
+              if (state.images.isNotEmpty)
+                Expanded(
+                  child: Container(
+                    decoration: const BoxDecoration(color: Colors.white),
+                    child: GridView.builder(
+                      controller: state.scrollController,
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: calculateColumns(context)),
+                      itemCount: state.images.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => FullScreenImage(
+                                    imageUrl:
+                                        state.images[index].largeImageURL!),
+                              ),
+                            );
+                          },
+                          child: buildImageCard(state, index),
+                        );
+                      },
+                    ),
+                  ),
+                )
+              else
+                Text(
+                    'Nothing was found for your request: "${state.changedQuery}"'),
+              if (state.bottomLoader) const LinearProgressIndicator(),
+            ],
           ),
-      ],
+        ],
+      ),
     ),
   );
 }
