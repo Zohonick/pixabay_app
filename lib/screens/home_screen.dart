@@ -23,70 +23,61 @@ Scaffold buildHomeScreen(
       ),
     ),
     body: SafeArea(
-      child: Stack(
+      child: Column(
         children: [
-          Column(
-            children: [
-              Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
-                  ),
-                  color: Colors.white,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: TextField(
-                    controller: state.searchController,
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.grey),
-                        borderRadius: BorderRadius.all(Radius.circular(5)),
-                      ),
-                      hintText: state.changedQuery,
-                    ),
-                    onChanged: (value) {
-                      context
-                          .read<PixabayBloc>()
-                          .add(PixabayChangeUpdateEvent(value));
-                    },
-                  ),
-                ),
+          Container(
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(15),
+                topRight: Radius.circular(15),
               ),
-              if (state.images.isNotEmpty)
-                Expanded(
-                  child: Container(
-                    decoration: const BoxDecoration(color: Colors.white),
-                    child: GridView.builder(
-                      controller: state.scrollController,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: calculateColumns(context)),
-                      itemCount: state.images.length,
-                      itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => FullScreenImage(
-                                    imageUrl:
-                                        state.images[index].largeImageURL!),
-                              ),
-                            );
-                          },
-                          child: buildImageCard(state, index),
-                        );
-                      },
-                    ),
+              color: Colors.white,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: TextField(
+                controller: state.searchController,
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.grey),
+                    borderRadius: BorderRadius.all(Radius.circular(5)),
                   ),
-                )
-              else
-                Text(
-                    'Nothing was found for your request: "${state.changedQuery}"'),
-              if (state.bottomLoader) const LinearProgressIndicator(),
-            ],
+                  hintText: state.changedQuery,
+                ),
+                onChanged: (value) {
+                  context
+                      .read<PixabayBloc>()
+                      .add(PixabayChangeUpdateEvent(value));
+                },
+              ),
+            ),
           ),
+          if (state.images.isNotEmpty)
+            Expanded(
+              child: GridView.builder(
+                controller: state.scrollController,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: calculateColumns(context)),
+                itemCount: state.images.length,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => FullScreenImage(
+                              imageUrl: state.images[index].largeImageURL!),
+                        ),
+                      );
+                    },
+                    child: buildImageCard(state, index),
+                  );
+                },
+              ),
+            )
+          else
+            Text('Nothing was found for your request: "${state.changedQuery}"'),
+          if (state.bottomLoader) const LinearProgressIndicator(),
         ],
       ),
     ),

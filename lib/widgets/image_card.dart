@@ -34,48 +34,46 @@ Widget buildImageCard(PixabayLoadedState state, int index) {
 Widget buildImageInfo(PixabayLoadedState state, int index) {
   const textStile = TextStyle(color: Colors.white, fontSize: 10);
 
-  return Expanded(
-    child: Container(
-      height: 20,
-      decoration: const BoxDecoration(
-        color: Colors.blueGrey,
-        borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
-      ),
-      child: Row(
-        children: [
-          const SizedBox(
-            width: 14,
-          ),
-          const Icon(
-            Icons.thumb_up_alt_sharp,
-            color: Colors.white,
-            size: 14,
-          ),
-          const SizedBox(
-            width: 4,
-          ),
-          Text(
-            state.images[index].likes.toString(),
-            style: textStile,
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          const Icon(
-            Icons.remove_red_eye,
-            color: Colors.white,
-            size: 14,
-          ),
-          const SizedBox(
-            width: 4,
-          ),
-          Text(
-            state.images[index].views.toString(),
-            style: textStile,
-          ),
-        ],
-      ),
+  return Container(
+    height: 20,
+    decoration: const BoxDecoration(
+      color: Colors.blueGrey,
+      borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15)),
+    ),
+    child: Row(
+      children: [
+        const SizedBox(
+          width: 14,
+        ),
+        const Icon(
+          Icons.thumb_up_alt_sharp,
+          color: Colors.white,
+          size: 14,
+        ),
+        const SizedBox(
+          width: 4,
+        ),
+        Text(
+          state.images[index].likes.toString(),
+          style: textStile,
+        ),
+        const SizedBox(
+          width: 8,
+        ),
+        const Icon(
+          Icons.remove_red_eye,
+          color: Colors.white,
+          size: 14,
+        ),
+        const SizedBox(
+          width: 4,
+        ),
+        Text(
+          state.images[index].views.toString(),
+          style: textStile,
+        ),
+      ],
     ),
   );
 }
