@@ -10,8 +10,7 @@ Scaffold buildHomeScreen(
   return Scaffold(
     appBar: AppBar(
       backgroundColor: Colors.blueGrey.shade300,
-      title: SafeArea(
-        child: Text(
+      title: Text(
           title,
           style: const TextStyle(
             fontSize: 25,
@@ -20,7 +19,6 @@ Scaffold buildHomeScreen(
           ),
           textAlign: TextAlign.center,
         ),
-      ),
     ),
     body: SafeArea(
       child: Column(
@@ -66,7 +64,7 @@ Scaffold buildHomeScreen(
                         context,
                         MaterialPageRoute(
                           builder: (context) => FullScreenImage(
-                              imageUrl: state.images[index].largeImageURL!),
+                              imageData: state.images[index]),
                         ),
                       );
                     },
@@ -76,7 +74,7 @@ Scaffold buildHomeScreen(
               ),
             )
           else
-            Text('Nothing was found for your request: "${state.changedQuery}"'),
+            Text('Nothing was found for your request: ${state.changedQuery}'),
           if (state.bottomLoader) const LinearProgressIndicator(),
         ],
       ),

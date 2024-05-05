@@ -8,11 +8,12 @@ import 'package:pixabay/Repository/entity/images_data_entity.dart';
 class PixabayRepository {
   final logger = getIt<Logger>();
 
+  static const pixabayUrl = 'https://pixabay.com/api/';
+
   static const apiKey = '43575310-158581d45b9acbd15e76983b9';
 
   Future<ImagesData?> fetchImagesData(String query, int page) async {
-    final url =
-        Uri.parse('https://pixabay.com/api/?key=$apiKey&q=$query&page=$page');
+    final url = Uri.parse('$pixabayUrl?key=$apiKey&q=$query&page=$page');
     logger.d(url);
 
     try {

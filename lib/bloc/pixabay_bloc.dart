@@ -47,7 +47,7 @@ class PixabayBloc extends Bloc<PixabayEvent, PixabayState> {
           true, changedQuery ?? ''));
       await fetchData(changedQuery ?? randomQuery(), false);
       emit(PixabayLoadedState(_images, _scrollController, _searchController,
-          false, changedQuery ?? randomQuery()));
+          false, changedQuery ?? ''));
     });
 
     on<PixabayChangeUpdateEvent>((event, emit) async {
